@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>edu.byu.cs329.hw0</groupId>
+    <artifactId>hw0-tooling-AleHarm</artifactId>
+    <version>0.0.1</version>
+
+    <name>hw0-tooling-AleHarm</name>
+    <description>Add project description here</description>
+
+    <url>http://cs.byu.edu/cs329/hwo-tooling</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <exec.mainClass>edu.byu.cs329.hw0.DijkstraMain</exec.mainClass>
+    </properties>
+
+
+    <dependencies>
+         <dependency> 
+             <groupId>org.apache.logging.log4j</groupId> 
+             <artifactId>log4j-slf4j-impl</artifactId> 
+             <version>2.22.1</version> 
+         </dependency>
+     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>4.0.0-M13</version>
+                <configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+   <groupId>org.apache.maven.plugins</groupId>
+   <artifactId>maven-checkstyle-plugin</artifactId>
+   <version>3.3.1</version>
+   <configuration>
+     <configLocation>google_checks.xml</configLocation>
+     <consoleOutput>true</consoleOutput>
+     <failsOnError>true</failsOnError>
+     <linkXRef>false</linkXRef>
+   </configuration>
+   <executions>
+     <execution>
+       <id>validate</id>
+       <phase>validate</phase>
+       <goals>
+         <goal>check</goal>
+       </goals>
+     </execution>
+   </executions>
+ </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.3</version>
+        <configuration>
+            <source>21</source>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>

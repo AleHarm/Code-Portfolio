@@ -1,0 +1,54 @@
+@Override
+    public boolean equals(Object o){
+
+        if(o == null){
+
+            return false;
+        }
+
+        if(o == this){
+
+            return true;
+        }
+
+        if(o instanceof Trie){
+
+            Trie trieO = (Trie)o;
+
+            if(this.nodeCount != trieO.nodeCount || this.wordCount != trieO.wordCount){
+
+                return false;
+            }
+
+            return equalsHelper(this.rootNode, trieO.rootNode);
+        }
+
+        return false;
+    }
+
+    private boolean equalsHelper(INode node1, INode node2){
+
+        if(node1.getValue() != node2.getValue()){
+
+            return false;
+        }
+
+        for(int i = 0; i < 26; i++){
+
+            INode child1 = node1.getChildren()[i];
+            INode child2 = node2.getChildren()[i];
+            boolean c1Null = (child1 == null);
+            boolean c2Null = (child2 == null);
+
+            if(!c1Null && !c2Null){
+
+                if(!equalsHelper(child1, child2)){
+
+                    return false;
+                }
+            }else if(c1Null != c2Null){
+                return false;
+            }
+        }
+        return true;
+    }

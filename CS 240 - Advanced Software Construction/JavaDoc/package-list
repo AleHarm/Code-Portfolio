@@ -1,0 +1,10 @@
+DataAccess
+Models
+Services
+Services.Requests
+Services.Responses
+chess
+passoffTests
+passoffTests.chessTests
+passoffTests.chessTests.chessExtraCredit
+passoffTests.chessTests.chessPieceTests

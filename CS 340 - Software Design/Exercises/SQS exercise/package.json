@@ -1,0 +1,21 @@
+{
+  "name": "sqs-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node dist/SqsClient.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.547.0",
+    "@types/node": "^20.12.3"
+  }
+}

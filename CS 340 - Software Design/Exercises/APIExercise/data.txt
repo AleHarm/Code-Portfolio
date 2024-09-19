@@ -1,0 +1,7 @@
+{
+  "to": "alexharmon0427@gmail.com",
+  "from": "harmoale000@gmail.com",
+  "subject": "testing stuff",
+  "textBody": "testststs",
+  "htmlBody": "this is a test o7"
+}

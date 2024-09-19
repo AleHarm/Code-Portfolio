@@ -1,0 +1,1 @@
+The mutants not covered are largely due to visual aspects of the program, like generateLookupTestAndAddToObligations. This means that no matter what tests are implemented, those spots should not be tested, and therefore the mutants cannot/should not be killed
