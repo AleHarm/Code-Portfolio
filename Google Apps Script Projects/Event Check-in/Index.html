@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+        margin: 0;
+        padding-top: 20px;
+      }
+
+      h2, h3 {
+        color: #1e90ff;
+        text-align: center;
+        font-size: 32px;
+      }
+
+      form {
+        background-color: #e6f2ff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        width: 600px;
+      }
+
+      label {
+        color: #1e90ff;
+        font-size: 20px;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"], select {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 10px;
+        border: 1px solid #1e90ff;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 20px;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      input[type="checkbox"] {
+        transform: scale(2);
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #1e90ff;
+        color: white;
+        padding: 16px 40px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #4682b4;
+      }
+
+      #submitting, #checkedIn, #bannedUser {
+        background-color: #e6f2ff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 600px;
+        display: none;
+      }
+
+      #errorText {
+        color: #FF6F6F;
+      }
+
+      #otherInput {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mainContent">
+      <h2>Check-In Form</h2>
+      <form id="checkInForm" onsubmit="submitForm(); return false;">
+        
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="submitting">
+        <h3>Submitting...</h3>
+      </div>
+      
+      <div id="checkedIn">
+        <h3>You're all checked in!</h3>
+        <h3>Have a great evening!</h3>
+      </div>
+      <div id="bannedUser">
+        <h3 id="errorText">An error has occurred.</h3>
+        <h3 id="errorText">Please see a receptionist.</h3>
+      </div>
+    </div>
+
+    <script>
+
+      function submitForm() {
+
+        document.getElementById('checkInForm').style.display = 'none';
+        document.getElementById('submitting').style.display = 'block';
+        
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+
+        google.script.run.withSuccessHandler(showMessage).withFailureHandler(handleBannedUser).submitData(firstName, lastName);
+      }
+
+      function showMessage() {
+        document.getElementById('submitting').style.display = 'none';
+        document.getElementById('checkedIn').style.display = 'block';
+        
+        setTimeout(function(){
+          document.getElementById('checkInForm').reset();
+          document.getElementById('checkInForm').style.display = 'block';
+          document.getElementById('checkedIn').style.display = 'none';
+        }, 3000);
+      }
+
+      function handleBannedUser() {
+        document.getElementById('submitting').style.display = 'none';
+        document.getElementById('bannedUser').style.display = 'block';
+
+        setTimeout(function(){
+          document.getElementById('checkInForm').reset();
+          document.getElementById('checkInForm').style.display = 'block';
+          document.getElementById('bannedUser').style.display = 'none';
+        }, 15000);
+      }
+    </script>
+  </body>
+</html>
