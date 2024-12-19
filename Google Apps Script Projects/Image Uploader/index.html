@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #DFF0FF;
+      color: #123250;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Align items to the top */
+      height: 100vh;
+      text-align: center;
+      position: relative; /* Add this to allow absolute positioning within body */
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 90vw; /* Limit width to 90% of viewport width */
+      width: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      margin-top: 20%; /* Move content down from the top */
+      position: relative; /* Position relative to place logo correctly */
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 25%;
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    h3 {
+      color: #1D4F7C;
+      font-size: 72px; /* Increased font size */
+      word-wrap: break-word; /* Ensure text wraps within the screen */
+    }
+
+    form {
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    input[type="file"] {
+      margin-bottom: 20px;
+      padding: 40px; /* Reduced padding */
+      border: 2px solid #5BA4E1;
+      border-radius: 8px;
+      font-size: 48px; /* Reduced font size */
+      max-width: 100%; /* Ensure it does not exceed container width */
+      -webkit-appearance: none; /* Remove default styling on iOS */
+      appearance: none; /* Remove default styling */
+      cursor: pointer; /* Pointer cursor for better user experience */
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      font-size: 48px; /* Reduced font size for the upload button */
+      padding: 40px; /* Reduced padding */
+      background: #3274AF; /* Background color */
+      color: white; /* Text color */
+      border: none; /* Remove border */
+      border-radius: 8px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor for better user experience */
+    }
+
+    input[type="button"], button {
+      background-color: #3274AF;
+      color: white;
+      border: none;
+      padding: 40px 80px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 48px;
+      margin-top: 20px;
+      max-width: 100%; /* Ensure it does not exceed container width */
+    }
+
+    input[type="button"]:hover, button:hover {
+      background-color: #27649C;
+    }
+
+    progress {
+      display: none;
+      margin: 20px auto;
+      height: 120px;
+      width: 100%;
+      max-width: 100%; /* Ensure it does not exceed container width */
+      border-radius: 8px;
+      border: 2px solid #5BA4E1;
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: #FFFFFF;
+      border-radius: 8px;
+    }
+
+    progress::-webkit-progress-value {
+      background-color: #123250;
+      border-radius: 8px;
+    }
+
+    #output{
+      display: none;
+      margin-top: 60px;
+      padding: 60px;
+      border: 2px solid #5BA4E1;
+      border-radius: 8px;
+      background-color: #C7E6FC;
+      width: 100%;
+      max-width: 90vw; /* Limit width to 90% of viewport width */
+      box-sizing: border-box;
+      font-size: 40px;
+    }
+
+    /* Media Query for iPhone Screen Sizes */
+    @media only screen and (max-width: 480px) {
+      h3 {
+        font-size: 96px; /* Larger font size */
+      }
+
+      input[type="file"] {
+        font-size: 48px; /* Reduced font size for iOS */
+        padding: 40px; /* Reduced padding for iOS */
+      }
+
+      input[type="button"], button {
+        font-size: 64px; /* Larger font size */
+        padding: 60px 120px; /* Larger padding */
+        max-width: 100%; /* Ensure it does not exceed container width */
+      }
+
+      progress {
+        height: 160px; /* Larger progress bar height */
+        max-width: 100%; /* Ensure it does not exceed container width */
+      }
+
+      #output{
+        padding: 100px; /* Larger padding */
+        max-width: 90vw; /* Limit width to 90% of viewport width */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://static.vecteezy.com/system/resources/previews/035/148/034/non_2x/ai-generated-frog-on-transparent-background-image-png.png" alt="Logo" class="logo" />
+    <h3>Upload Your Images</h3>
+    <form id="myForm">
+      <input type="file" id="fileItem" name="fileItem" accept="video/*,image/*" multiple />
+      <input type="button" value="Upload" onclick="startUpload()" />
+    </form>
+    
+    <progress id="progressBar" value="0" max="100"></progress>
+    
+    <div id="output"></div>
+    
+  </div>
+
+  <script>
+    function startUpload() {
+      var fileInput = document.getElementById('fileItem');
+      var files = fileInput.files;
+
+      if (!files.length) {
+        document.getElementById('output').innerHTML = "Please select images to upload.";
+        return;
+      }
+
+      var totalFiles = files.length;
+      var filesUploaded = 0;
+      var currentIndex = 0;
+      var isSingleFile = files.length == 1;
+
+      if(!isSingleFile){
+
+        var progressBar = document.getElementById("progressBar");
+        progressBar.style.display = "block";
+        progressBar.value = 0;
+      }
+
+      var outputSection = document.getElementById('output');
+      outputSection.style.display = "block";
+
+      document.getElementById('output').innerHTML = "Processing... (This may take a second)";
+
+      function uploadNextFile() {
+        if (currentIndex >= totalFiles) {
+          if(!isSingleFile){
+            progressBar.style.display = "none";
+          }
+          document.getElementById('output').innerHTML = "All files uploaded successfully!";
+          return;
+        }
+
+        var file = files[currentIndex];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var base64Data = event.target.result.split(',')[1];
+          google.script.run.withSuccessHandler(function(response) {
+            filesUploaded++;
+            if(!isSingleFile){
+              progressBar.value = (filesUploaded / totalFiles) * 100;
+            }
+            currentIndex++;
+            uploadNextFile();
+          }).withFailureHandler(function(error) {
+            document.getElementById('output').innerHTML = "Failed to upload file: " + file.name + " due to " + error;
+            currentIndex++;
+            uploadNextFile();
+          }).uploadFile(base64Data, file.name);
+        };
+        reader.readAsDataURL(file);
+      }
+
+      uploadNextFile();
+    }
+
+    // Initialize Google API Client
+    function initClient() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+    
+    // Load Google API Client
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://apis.google.com/js/platform.js?onload=initClient';
+      document.head.appendChild(script);
+    })();
+  </script>
+</body>
+</html>
