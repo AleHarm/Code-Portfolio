@@ -1,0 +1,11 @@
+@relation bad_data
+
+@attribute a1 numeric
+@attribute a2 numeric
+@attribute class {0, 1}
+
+@data
+10.0, 10.0, 0
+10.0, 10.0, 1
+-10.0, -10.0, 0
+-10.0, -10.0, 1
