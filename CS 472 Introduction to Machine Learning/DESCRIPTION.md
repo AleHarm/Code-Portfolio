@@ -1,4 +1,4 @@
-# CS 270: Introduction to Machine Learning
+# CS 472: Introduction to Machine Learning
 
 ## Course Overview
 This course provides a comprehensive introduction to fundamental models of machine learning, covering a wide range of techniques and their real-world applications[2].
